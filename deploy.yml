@@ -1,0 +1,26 @@
+---
+- name: Pull and Run Docker Image from Docker Hub
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Pull Docker Image
+      docker_image:
+        name: "parva04/calculator:latest"
+        source: pull
+      register: docker_pull_result
+
+    - name: Display Docker Pull Result
+      debug:
+        var: docker_pull_result
+
+    - name: Stop existing container (if running)
+      shell: docker stop calculator
+      ignore_errors: yes
+
+    - name: Remove existing container (if exists)
+      shell: docker rm calculator
+      ignore_errors: yes
+
+    - name: Running container
+      # Starts the container in detached mode (-d) [cite: 137]
+      shell: docker run -it -d --name calculator parva04/calculator:latest
