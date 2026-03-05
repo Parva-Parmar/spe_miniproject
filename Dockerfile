@@ -1,11 +1,11 @@
 FROM golang:1.22-alpine
 
-WORKDIR /app
+ WORKDIR /app
 
-COPY go.mod ./
+ COPY go.mod ./
 
 COPY . .
 
-RUN go build -o calculator main.go
+RUN go build -o calc-app main.go
 
-CMD ["./calculator"]
+CMD ["./calc-app"]
