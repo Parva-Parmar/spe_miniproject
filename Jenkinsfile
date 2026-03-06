@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     echo "Checking if target deployment server is reachable..."
-                    sh "ansible all -m ping -i inventory"
+                    sh "ansible all -m ping -i inventory.ini"
                 }
             }
         }
@@ -71,7 +71,7 @@ pipeline {
                 script {
                     ansiblePlaybook(
                         playbook: 'deploy.yml',
-                        inventory: 'inventory'
+                        inventory: 'inventory.ini'
                     )
                 }
             }
