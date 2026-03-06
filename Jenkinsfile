@@ -61,4 +61,16 @@ pipeline {
             }
         }
     }
+    post {
+            success {
+                mail to: 'parvaparmar41@gmail.com',
+                     subject: "SUCCESS: Jenkins Pipeline ${currentBuild.fullDisplayName}",
+                     body: "Great news!\n\nThe Scientific Calculator pipeline has successfully completed all stages, including the Go unit tests, the Docker build, the server ping, and the Ansible deployment.\n\nCheck the console output here: ${env.BUILD_URL}"
+            }
+            failure {
+                mail to: 'parvaparmar41@gmail.com',
+                     subject: "FAILED: Jenkins Pipeline ${currentBuild.fullDisplayName}",
+                     body: "Attention required.\n\nThe Scientific Calculator pipeline encountered an error during one of the stages (Build, Test, Ping, or Deploy).\n\nPlease review the logs here: ${env.BUILD_URL}"
+            }
+        }
 }
