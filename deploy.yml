@@ -22,5 +22,5 @@
       ignore_errors: yes
 
     - name: Running container
-      # Starts the container in detached mode (-d) [cite: 137]
+
       shell: docker run -it -d --name calculator parva04/calculator:latest

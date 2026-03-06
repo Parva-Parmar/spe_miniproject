@@ -1,8 +1,8 @@
 FROM golang:1.22-alpine
 
- WORKDIR /app
+WORKDIR /app
 
- COPY go.mod ./
+COPY go.mod ./
 
 COPY . .
 
