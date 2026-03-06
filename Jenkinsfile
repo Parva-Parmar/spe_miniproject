@@ -15,6 +15,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Test Code') {
+            steps {
+                script {
+                    echo "Running unit tests..."
+                    sh "docker run --rm -v \$(pwd):/app -w /app golang:1.22-alpine go test -v ./..."
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -22,12 +32,21 @@ pipeline {
                 }
             }
         }
+
         stage('Push Docker Images') {
             steps {
                 script{
                     docker.withRegistry('', 'DockerHubCred') {
                         sh "docker push ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
                     }
+                }
+            }
+        }
+        stage('Ping Server') {
+            steps {
+                script {
+                    echo "Checking if target deployment server is reachable..."
+                    sh "ansible all -m ping -i inventory"
                 }
             }
         }
